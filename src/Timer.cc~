@@ -1,0 +1,3 @@
+#include <chrono>
+
+typedef chrono::high_resolution_clock Timer;
