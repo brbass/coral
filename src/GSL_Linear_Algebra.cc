@@ -18,7 +18,7 @@ GSL_Linear_Algebra()
 {
 }
 
-// solves linear system Ax=b using LU decomposition
+// solves linear system Ax=b using LU decomposition: faster than Epetra for n<300
 void GSL_Linear_Algebra::
 lu_solve(vector<double> &a_data,
          vector<double> &b_data,
@@ -48,7 +48,7 @@ lu_solve(vector<double> &a_data,
     gsl_permutation_free(p);
 }
 
-// solves linear system Ax=b using QR decomposition
+// solves linear system Ax=b using QR decomposition: slower than LU
 void GSL_Linear_Algebra::
 qr_solve(vector<double> &a_data,
          vector<double> &b_data,
