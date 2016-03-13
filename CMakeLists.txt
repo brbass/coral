@@ -5,11 +5,11 @@ set(CMAKE_C_COMPILER "mpicc")
 set(CMAKE_CXX_COMPILER "mpic++")
 set(CMAKE_VERBOSE_MAKEFILE off)
 set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_INSTALL_PREFIX /home/brbass/research/coral/bin)
 
 project(Coral)
 
 # standard flags
+set(CMAKE_INSTALL_PREFIX /home/brbass/research/coral/bin)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -o3 -fopenmp")
 
 # gsl flags
