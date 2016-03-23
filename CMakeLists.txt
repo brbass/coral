@@ -2,6 +2,9 @@ cmake_minimum_required (VERSION 3.1)
 
 project(Coral)
 
+# turn on or off certain checks
+add_definitions(-DCHECK=1)
+
 # compiler options
 set(CMAKE_C_COMPILER "mpicc")
 set(CMAKE_CXX_COMPILER "mpic++")

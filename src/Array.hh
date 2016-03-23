@@ -1,8 +1,6 @@
 #ifndef Array_hh
 #define Array_hh
 
-#define CHECK false
-
 #include <cmath>
 #include <iostream>
 #include <numeric>
@@ -57,6 +55,7 @@ public:
     int dimension(int const dimension)
     {
 #if CHECK
+        std::cout << "hi" << std::endl;
         Check(dimension < number_of_dimensions_, "number of dimensions");
 #endif        
         return size_[dimension];
@@ -243,7 +242,7 @@ template<class T> T &Array<T>::
 operator()(vector<int> const subscript)
 {
     int index = subscript_to_index(subscript);
-    
+
     return data_[index];
 }
 

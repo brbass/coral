@@ -12,54 +12,36 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    if (argc < 2)
-    {
-        cerr << "usage: array [first_dimension second_dimension ...]" << endl;
-        return 1;
-    }
-    int number_of_dimensions = argc - 1;
+    int size1 = 20;
+    int size2 = 19;
+    int size3 = 18;
+    
+    int number_of_dimensions = 3;
     
     Random_Number_Generator rng(-100, 100);
+    
+    vector<int> size = {size1, size2, size3};
+    int total_size = size1 * size2 * size3;
 
-    vector<int> size(number_of_dimensions);
-    int total_size = 1;
-    for (int i = 0; i < number_of_dimensions; ++i)
-    {
-        size[i] = atoi(argv[i+1]);
-        total_size *= size[i];
-    }
     vector<double> data(rng.random_double_vector(total_size));
     
     string description = "hi";
-
+    
     Array<double> array(data,
                         size,
                         description);
     
+    // check subscripts
+
     cout << "subscript check" << endl;
     unsigned w = 16;
-    // cout << setw(w) << "original" << setw(w) << "check value";
-    // for (int d = 0; d < number_of_dimensions; ++d)
-    // {
-    //     cout << setw(w) << "dimension " + to_string(d);
-    // }
-    // cout << endl;
-    // for (int i = 0; i < total_size; ++i)
-    // {
-    //     vector<int> subscript = array.index_to_subscript(i);
-    //     int new_index = array.subscript_to_index(subscript);
-    //     cout << setw(w) << i << setw(w) << new_index;
-    //     for (int d = 0; d < number_of_dimensions; ++d)
-    //     {
-    //         cout << setw(w) << subscript[d];
-    //     }
-    //     cout << endl;
-    // }
     for (int i = 0; i < total_size; ++i)
     {
         Check(i == array.subscript_to_index(array.index_to_subscript(i)), "");
     }
     cout << "passed" << endl << endl;
+
+    // multiply arrays
     
     cout << "time to multiply two arrays" << endl;
     vector<vector<int> > indices;
@@ -82,7 +64,26 @@ int main(int argc, char* argv[])
         }
     }
     timer.stop();
-    cout << "vector: " << timer.time() << endl;
+    cout << "vector, standard: " << timer.time() << endl;
+
+    timer.start();
+    for (unsigned t = 0; t < num_iterations; ++t)
+    {
+        for (unsigned i = 0; i < size1; ++i)
+        {
+            for (unsigned j = 0; j < size2; ++j)
+            {
+                for (unsigned k = 0; k < size3; ++k)
+                {
+                    unsigned l = k + size3 * (j + size2 * i);
+                    
+                    data[l] = 0.99*data[l];
+                }
+            }
+        }
+    }
+    timer.stop();
+    cout << "vector, linear: " << timer.time() << endl;
 
     timer.start();
     for (unsigned t = 0; t < num_iterations; ++t)
@@ -105,4 +106,22 @@ int main(int argc, char* argv[])
     }
     timer.stop();
     cout << "array, linear: " << timer.time() << endl;
+
+    timer.start();
+    for (unsigned t = 0; t < num_iterations; ++t)
+    {
+        for (unsigned i = 0; i < size1; ++i)
+        {
+            for (unsigned j = 0; j < size2; ++j)
+            {
+                for (unsigned k = 0; k < size3; ++k)
+                {
+                    array(i, j, k) = 0.99*array(i, j, k);
+                }
+            }
+        }
+    }
+    timer.stop();
+    cout << "array, multiple: " << timer.time() << endl;
+    cout << endl;
 }
