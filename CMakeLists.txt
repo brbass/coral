@@ -1,12 +1,12 @@
 cmake_minimum_required (VERSION 3.1)
 
+project(Coral)
+
 # compiler options
 set(CMAKE_C_COMPILER "mpicc")
 set(CMAKE_CXX_COMPILER "mpic++")
 set(CMAKE_VERBOSE_MAKEFILE off)
 set(CMAKE_BUILD_TYPE Debug)
-
-project(Coral)
 
 # standard flags
 set(CMAKE_INSTALL_PREFIX /home/brbass/research/coral/bin)
@@ -21,9 +21,12 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lepetra -lamesos -laztecoo -lepetraext 
 file(GLOB coral_src "src/*.cc")
 
 set(matrix_main test/matrix_solution.cc)
+set(array_main test/array.cc)
 
 include_directories(src)
 
 add_executable(matrix_solution ${coral_src} ${matrix_main})
+add_executable(array ${coral_src} ${array_main})
 
 install(TARGETS matrix_solution DESTINATION .)
+install(TARGETS array DESTINATION .)
